@@ -48,13 +48,13 @@ public class Runanimation : MonoBehaviour
         rb.AddForce(moveAgility * (moceVector - rb.velocity));
 
         //アニメーション速度調整
-        if (rb.velocity.magnitude > 0.01f)
+        /*if (rb.velocity.magnitude > 0.01f)
         {
             this.animator.speed = rb.velocity.magnitude / animationSpeed; 
-        }
+        }*/
 
         //ジャンプ
-        if (Input.GetKey(KeyCode.Space) && transform.position.y < 0.5) //ジャンプ
+        if (Input.GetKey(KeyCode.Space) && transform.position.y < 0.1) //ジャンプ
         {
             animator.SetTrigger("jumpTrigger");
             rb.AddForce(transform.up * jumpForce,ForceMode.Impulse);
@@ -64,7 +64,7 @@ public class Runanimation : MonoBehaviour
         difference = this.transform.position - latestPos;
         latestPos = transform.position;
         //移動距離によって遷移
-        if (difference.magnitude > 0.05f)
+        if (difference.magnitude > 0.03f)
         {
             this.animator.SetBool("idleBool", false);　//走り状態遷移
             if(rb.velocity.y < 0.01f)
