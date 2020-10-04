@@ -5,8 +5,7 @@ using UnityEngine;
 public class Runanimation : MonoBehaviour
 {
     float runSpeed = 10f;　//移動速度
-    float moveAgility = 500f;　//機敏性
-    float animationSpeed = 8.0f; //アニメーション調整
+    float moveAgility = 500f;　
     float jumpForce = 600f;
     float horizontalInput = 0f;
     float varticalInput = 0f;
@@ -46,12 +45,6 @@ public class Runanimation : MonoBehaviour
         moceVector.z = runSpeed * varticalInput;
         //減速
         rb.AddForce(moveAgility * (moceVector - rb.velocity));
-
-        //アニメーション速度調整
-        /*if (rb.velocity.magnitude > 0.01f)
-        {
-            this.animator.speed = rb.velocity.magnitude / animationSpeed; 
-        }*/
 
         //ジャンプ
         if (Input.GetKey(KeyCode.Space) && transform.position.y < 0.1) //ジャンプ
