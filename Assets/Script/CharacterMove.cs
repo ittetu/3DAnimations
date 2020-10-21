@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HorizonMove : MonoBehaviour
+public class CharacterMove : MonoBehaviour
 {
     GameObject playerCam;
     float runSpeed = 30f;　//移動速度
