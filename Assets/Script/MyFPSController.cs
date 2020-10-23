@@ -15,11 +15,8 @@ public class MyFPSController : MonoBehaviour
 #pragma warning restore 649
     Transform arms;
     Vector3 armPosition;
-    GameObject playerCamera;
     Rigidbody _rigidbody;
-    CapsuleCollider _collider;
     bool is_Grounded = false;
-    bool jumpSwitch = false;
     float jumpForce = 30f;
     float runSpeed = 5f;
     float mouseX
@@ -38,10 +35,14 @@ public class MyFPSController : MonoBehaviour
     {
         get { return Input.GetAxis("Vertical"); }
     }
+    bool jump
+    {
+        get { return Input.GetButtonDown("Jump"); }
+    }
     float mouseSensitivity = 30f;
 
 
-    private Transform AssignCharactersCamera()
+    private Transform AssignCharactersCamera()　//むし
     {
         var t = transform;
         arms.SetPositionAndRotation(t.position, t.rotation);
@@ -53,14 +54,14 @@ public class MyFPSController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        arms = AssignCharactersCamera();
+        /*arms = AssignCharactersCamera();*/
         _rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        arms.position = transform.position + transform.TransformVector(armPosition);
+        //arms.position = transform.position + transform.TransformVector(armPosition); 質問削除
         //手のposition
         //ジャンプメソッド
         Jump();
@@ -73,14 +74,14 @@ public class MyFPSController : MonoBehaviour
         RotationCameraAndCharacter();
         //キャラクターの動き
         MoveCharacter();
-        is_Grounded = false;
+        is_Grounded = true;
 
     }
 
     //ジャンプメソッド
     void Jump()
     {
-        if (!is_Grounded || !jumpSwitch) return;
+        if (!is_Grounded || !jump) return;
         _rigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         is_Grounded = false;
     }
@@ -89,12 +90,12 @@ public class MyFPSController : MonoBehaviour
     void RotationCameraAndCharacter()
     {
         //カメラのrotationを更新
-        Vector3 worldUp = arms.InverseTransformDirection(Vector3.up);
-        var rotation = arms.rotation *
+        Vector3 worldUp = /*arms*/transform.InverseTransformDirection(Vector3.up);
+        var rotation = /*arms*/transform.rotation *
             Quaternion.AngleAxis(mouseX * mouseSensitivity, worldUp) *
             Quaternion.AngleAxis(-1 * mouseY * mouseSensitivity,Vector3.right);
         transform.eulerAngles = new Vector3(0, rotation.eulerAngles.y, 0);
-        arms.rotation = rotation;
+        /*arms*/transform.rotation = rotation;
     }
 
     //キャラクターの移動メソッド
@@ -117,8 +118,6 @@ public class MyFPSController : MonoBehaviour
     //OnCollisionStayでsphereRayCast コライダーとの衝突判定を調べる
 
     //視点角度上限設定
-
-    //カメラとarmsの移動の同一化
 
     //垂直視点の規制
 
