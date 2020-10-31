@@ -12,6 +12,7 @@ public class MyAutomaticGunScript : MonoBehaviour
     public float swaySmoothValue = 4.0f;
     public float lastFired = 0f;
     public float fireRate;
+    public float bulletForce = 400.0f;
 
     public Vector3 initialSwayPoint;
 
@@ -164,20 +165,37 @@ public class MyAutomaticGunScript : MonoBehaviour
             Debug.Log(fireRate);
             if(Time.time - lastFired > 1f / fireRate)
             {
-                Debug.Log(Time.time);
                 lastFired = Time.time;
                 //弾消費
                 currentAmmo -= 1;
                 //銃声
                 shootAudioSource.clip = SoundClips.shootSound;
                 shootAudioSource.Play();
+                //ADSか否か
                 if (!isAiming)
                 {
                     anim.Play("Fire", 0, 0.0f);
-                    muzzleParticles.Emit(1);
-                    //corutine
-                    StartCoroutine(MuzzleFlashLight());
                 }
+                else//aiming
+                {
+                    anim.Play("Aim Fire", 0, 0.0f);
+                }
+                //射撃時の火演出
+                muzzleParticles.Emit(1);
+                //corutine
+                StartCoroutine(MuzzleFlashLight());
+
+                //弾生成
+                var bullet = Instantiate(Prefabs.bulletPrefab,
+                    Spawnpoints.bulletSpawnPoint.transform.position,
+                    Spawnpoints.bulletSpawnPoint.transform.rotation);
+                //弾射出
+                bullet.GetComponent<Rigidbody>().velocity =
+                    bullet.transform.forward * bulletForce;
+                //薬莢生成
+                Instantiate(Prefabs.casingPrefab,
+                    Spawnpoints.casingSpawnPoint.transform.position,
+                    Spawnpoints.casingSpawnPoint.transform.rotation);
             }
         }
 

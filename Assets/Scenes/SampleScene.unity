@@ -374,7 +374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4973431802215156, guid: 09aca85bf6d6a3648b9082cc4cd4a912, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 4973431802215156, guid: 09aca85bf6d6a3648b9082cc4cd4a912, type: 3}
       propertyPath: m_LocalPosition.z
@@ -525,6 +525,7 @@ MonoBehaviour:
   swaySmoothValue: 4
   lastFired: 0
   fireRate: 11
+  bulletForce: 400
   initialSwayPoint: {x: 0, y: 0, z: 0}
   weaponSway: 1
   isAiming: 0
