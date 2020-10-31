@@ -106,7 +106,7 @@ namespace FPSControllerLPFP
             minVerticalAngle = maxVerticalAngle;
             maxVerticalAngle = min;
         }
-
+        //minとmaxが規定値以上なら警告文が出る
         private static float ClampRotationRestriction(float rotationRestriction, float min, float max)
         {
             if (rotationRestriction >= min && rotationRestriction <= max) return rotationRestriction;
@@ -180,6 +180,7 @@ namespace FPSControllerLPFP
         private float RestrictVerticalRotation(float mouseY)
         {
 			var currentAngle = NormalizeAngle(arms.eulerAngles.x);
+            Debug.Log(currentAngle);
             var minY = minVerticalAngle + currentAngle;
             var maxY = maxVerticalAngle + currentAngle;
             return Mathf.Clamp(mouseY, minY + 0.01f, maxY - 0.01f);

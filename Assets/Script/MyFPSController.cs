@@ -19,13 +19,18 @@ public class MyFPSController : MonoBehaviour
     bool is_Grounded = false;
     float jumpForce = 30f;
     float runSpeed = 5f;
+    float minVerticalAngle = -90f;
+    float maxVerticalAngle = 90f;
+    SmoothRotation _rotateX;
+    SmoothRotation _rotateY;
+    float rotationSmoothness = 0.05f;
     float mouseX
     {
-        get { return Input.GetAxis("Mouse X"); }
+        get { return Input.GetAxisRaw("Mouse X") * mouseSensitivity; }
     }
     float mouseY
     {
-        get { return Input.GetAxis("Mouse Y"); }
+        get { return Input.GetAxisRaw("Mouse Y") * mouseSensitivity; }
     }
     float hMove
     {
@@ -39,7 +44,7 @@ public class MyFPSController : MonoBehaviour
     {
         get { return Input.GetButtonDown("Jump"); }
     }
-    float mouseSensitivity = 30f;
+    float mouseSensitivity = 15f;
 
 
     private Transform AssignCharactersCamera()　//むし
@@ -54,15 +59,20 @@ public class MyFPSController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*arms = AssignCharactersCamera();*/
+        //armのポジションとローテーションをthisと同期？
+        arms = AssignCharactersCamera();
+        //スタート時のマウス移動格納
+        _rotateX = new SmoothRotation(mouseX);
+        _rotateY = new SmoothRotation(mouseY);
+
         _rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //arms.position = transform.position + transform.TransformVector(armPosition); 質問削除
-        //手のposition
+        //armのポジション
+        arms.position = transform.position + transform.TransformVector(armPosition);
         //ジャンプメソッド
         Jump();
         //サウンド
@@ -75,7 +85,6 @@ public class MyFPSController : MonoBehaviour
         //キャラクターの動き
         MoveCharacter();
         is_Grounded = true;
-
     }
 
     //ジャンプメソッド
@@ -89,13 +98,45 @@ public class MyFPSController : MonoBehaviour
     //キャラクターとカメラのrotationメソッド
     void RotationCameraAndCharacter()
     {
+        //SmoothUpdataメソッドでマウス移動調整
+        var rotateX = _rotateX.SmoothUpdata(mouseX, rotationSmoothness);
+        var rotateY = _rotateY.SmoothUpdata(mouseY, rotationSmoothness);
+        //Y方向入力のみ限界値指定
+        var clampedY = RestrictAngle(rotateY);
         //カメラのrotationを更新
-        Vector3 worldUp = /*arms*/transform.InverseTransformDirection(Vector3.up);
-        var rotation = /*arms*/transform.rotation *
-            Quaternion.AngleAxis(mouseX * mouseSensitivity, worldUp) *
-            Quaternion.AngleAxis(-1 * mouseY * mouseSensitivity,Vector3.right);
+        Vector3 worldUp = arms.InverseTransformDirection(Vector3.up);
+        var rotation = arms.rotation *
+            Quaternion.AngleAxis(rotateX , worldUp) *
+            Quaternion.AngleAxis(clampedY ,Vector3.left);
         transform.eulerAngles = new Vector3(0, rotation.eulerAngles.y, 0);
-        /*arms*/transform.rotation = rotation;
+        arms.rotation = rotation;
+    }
+
+    //垂直方向の視点移動を規制
+    float RestrictAngle(float rotateY)
+    {
+        //armsのアングルを90~-90に変換
+        var currentAngle = NormalizeAngle(arms.eulerAngles.x);
+        //垂直視点で０になるように計算
+        var minY = minVerticalAngle + currentAngle;
+        var maxY = maxVerticalAngle + currentAngle;
+        //垂直視点より少し斜めで規制
+        return Mathf.Clamp(rotateY, minY + 0.02f, maxY - 0.02f);
+    }
+
+    //オイラーアングルを９０〜ー９０に変換
+    float NormalizeAngle(float angle)
+    {
+        while (angle > 180)
+        {
+            angle -= 360;
+        }
+        while (angle <= -180)
+        {
+            angle += 360;
+        }
+
+        return angle;
     }
 
     //キャラクターの移動メソッド
@@ -111,6 +152,23 @@ public class MyFPSController : MonoBehaviour
         Vector3 rbVelocity = _rigidbody.velocity;
         Vector3 force = new Vector3(velocity.x - rbVelocity.x, 0f, velocity.z - rbVelocity.z);
         _rigidbody.AddForce(force, ForceMode.VelocityChange);
+    }
+
+    //SmoothRotationクラス
+    private class SmoothRotation
+    {
+        private float _current;
+        private float _currentVelocity;
+
+        public SmoothRotation(float startAngle)
+        {
+            _current = startAngle;
+        }
+
+        public float SmoothUpdata(float target,float smoothTime)
+        {
+            return _current = Mathf.SmoothDampAngle(_current, target, ref _currentVelocity,smoothTime);
+        }
     }
 
     //Inputボタン設定

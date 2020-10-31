@@ -127,6 +127,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2112691067}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &161982499 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4943854361810558, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112691067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &180681183 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 108560476492985952, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112691067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &385119315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,6 +196,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ed1e0628e5ec2a409b6e3e2eaa84a34, type: 3}
+--- !u!198 &399591938 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198606002904367116, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112691067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +294,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!4 &744976858 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4403548763994940, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112691067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &802093828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -390,6 +414,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09aca85bf6d6a3648b9082cc4cd4a912, type: 3}
+--- !u!20 &1560568545 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 20176831017129482, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112691067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1597744470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -466,6 +496,83 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arms: {fileID: 64694742}
+--- !u!4 &1786506848 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4631234668473476, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112691067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1825177445 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1402701107355814, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112691067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1825177447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825177445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced3ef59f9e8645759b14596ed58c19b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swayAmount: 0.02
+  maxSwayAmount: 0.06
+  swaySmoothValue: 4
+  lastFired: 0
+  fireRate: 11
+  initialSwayPoint: {x: 0, y: 0, z: 0}
+  weaponSway: 1
+  isAiming: 0
+  isReloading: 0
+  isInspecting: 0
+  outOfAmmo: 0
+  gunCamera: {fileID: 1560568545}
+  aimFov: 25
+  fovSpeed: 15
+  defaultFov: 40
+  currentAmmo: 0
+  currentAmmoText: {fileID: 0}
+  totalAmmoText: {fileID: 0}
+  enableMuzzleflash: 1
+  muzzleParticles: {fileID: 399591938}
+  enableSparks: 1
+  sparkParticles: {fileID: 2121745596}
+  minSparkEmission: 1
+  maxSparkEmission: 7
+  muzzleflashLight: {fileID: 180681183}
+  lightDuration: 0.02
+  shootAudioSource: {fileID: 1825177449}
+  mainAudioSource: {fileID: 0}
+  grenadeSpawnDelay: 0.35
+  Prefabs:
+    bulletPrefab: {fileID: 4879702113200764, guid: 5953171a59c27394e9ad5cbb564affa8,
+      type: 3}
+    casingPrefab: {fileID: 4420745226056240, guid: 7be59128a5ee3424faf33d7a408c0b2e,
+      type: 3}
+    grenadePrefab: {fileID: 4191440083646698, guid: 7b04fe350ed10a741a1e245447860d9e,
+      type: 3}
+  Spawnpoints:
+    casingSpawnPoint: {fileID: 744976858}
+    bulletSpawnPoint: {fileID: 161982499}
+    grenadeSpawnPoint: {fileID: 1786506848}
+  SoundClips:
+    shootSound: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
+    takeOutSound: {fileID: 0}
+    holsterSound: {fileID: 0}
+    reloadSoundOutOfAmmo: {fileID: 0}
+    reloadSoundAmmoLeft: {fileID: 0}
+    aimSound: {fileID: 0}
+--- !u!82 &1825177449 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 82039148228500692, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112691067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2112691067
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -524,12 +631,17 @@ PrefabInstance:
     - target: {fileID: 54436517532814138, guid: b9ca752c3df4dec4cadafd04fc5d444b,
         type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 114216158892903854, guid: b9ca752c3df4dec4cadafd04fc5d444b,
         type: 3}
       propertyPath: weaponSway
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114216158892903854, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114985937948325432, guid: b9ca752c3df4dec4cadafd04fc5d444b,
         type: 3}
@@ -538,6 +650,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9ca752c3df4dec4cadafd04fc5d444b, type: 3}
+--- !u!198 &2121745596 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198891940985527242, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2112691067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2140426810
 GameObject:
   m_ObjectHideFlags: 0
