@@ -116,7 +116,7 @@ namespace FPSControllerLPFP
         }
 			
         /// Checks if the character is on the ground.
-        private void OnCollisionStay()
+        /*private void OnCollisionStay()
         {
             var bounds = _collider.bounds;
             var extents = bounds.extents;
@@ -130,7 +130,7 @@ namespace FPSControllerLPFP
             }
 
             _isGrounded = true;
-        }
+        }*/
 			
         /// Processes the character movement and the camera rotation every fixed framerate frame.
         private void FixedUpdate()

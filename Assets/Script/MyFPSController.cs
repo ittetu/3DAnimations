@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Rigidbody CapsuleCollider AudioSorce component
 [RequireComponent(typeof(Rigidbody))]
@@ -24,6 +25,11 @@ public class MyFPSController : MonoBehaviour
     SmoothRotation _rotateX;
     SmoothRotation _rotateY;
     float rotationSmoothness = 0.05f;
+
+    public Image _Image;
+
+    float pushForce = 50f;
+
     float mouseX
     {
         get { return Input.GetAxisRaw("Mouse X") * mouseSensitivity; }
@@ -66,6 +72,7 @@ public class MyFPSController : MonoBehaviour
         _rotateY = new SmoothRotation(mouseY);
 
         _rigidbody = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -106,8 +113,8 @@ public class MyFPSController : MonoBehaviour
         //カメラのrotationを更新
         Vector3 worldUp = arms.InverseTransformDirection(Vector3.up);
         var rotation = arms.rotation *
-            Quaternion.AngleAxis(rotateX , worldUp) *
-            Quaternion.AngleAxis(clampedY ,Vector3.left);
+            Quaternion.AngleAxis(rotateX, worldUp) *
+            Quaternion.AngleAxis(clampedY, Vector3.left);
         transform.eulerAngles = new Vector3(0, rotation.eulerAngles.y, 0);
         arms.rotation = rotation;
     }
@@ -165,9 +172,27 @@ public class MyFPSController : MonoBehaviour
             _current = startAngle;
         }
 
-        public float SmoothUpdata(float target,float smoothTime)
+        public float SmoothUpdata(float target, float smoothTime)
         {
-            return _current = Mathf.SmoothDampAngle(_current, target, ref _currentVelocity,smoothTime);
+            return _current = Mathf.SmoothDampAngle(_current, target, ref _currentVelocity, smoothTime);
+        }
+    }
+
+    //敵との衝突　tag
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Animal")
+        {
+            Debug.Log(collision.gameObject.tag + "と衝突");
+            //画面を赤点
+            _Image.GetComponent<DamageScreen>().isDamaging = true;
+            //Animalと衝突時ノックバック
+            var pushVec = collision.contacts[0].normal.normalized;
+            var push = pushVec * pushForce;
+            var localPushVec = transform.InverseTransformDirection(push);
+
+            _rigidbody.AddForce(localPushVec, ForceMode.VelocityChange);
+            Debug.Log(localPushVec);
         }
     }
 
