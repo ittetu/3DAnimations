@@ -32,7 +32,10 @@ public class spawnAnimal : MonoBehaviour
     {
         if(collision.gameObject.tag == "Bullet")
         {
+            //動物を消す
             this.gameObject.SetActive(false);
+            //generatedAnimalの数を減らす
+
         }
     }
 }
