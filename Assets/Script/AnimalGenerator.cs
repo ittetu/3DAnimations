@@ -9,7 +9,7 @@ public class AnimalGenerator : MonoBehaviour
 
     const int poolLimit = 20;
     const int generateLimit = 10;
-    int generatedAnimalNum = 0;
+    public int generatedAnimalNum = 0;
 
     //animalのprefabを登録
     public List<GameObject>animalList = new List<GameObject>();

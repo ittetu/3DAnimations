@@ -6,6 +6,8 @@ public class spawnAnimal : MonoBehaviour
 {
     Transform _transform;
 
+    public GameObject _AnimalGenerator;
+    AnimalGenerator _AnimalGeneratorSc;
 
     public void Init(Vector3 spawnPos)
     {
@@ -19,7 +21,8 @@ public class spawnAnimal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _AnimalGenerator = GameObject.Find("AnimalGenerator");
+        _AnimalGeneratorSc = _AnimalGenerator.GetComponent<AnimalGenerator>();
     }
 
     // Update is called once per frame
@@ -35,7 +38,7 @@ public class spawnAnimal : MonoBehaviour
             //動物を消す
             this.gameObject.SetActive(false);
             //generatedAnimalの数を減らす
-
+            _AnimalGeneratorSc.generatedAnimalNum--;
         }
     }
 }

@@ -10,6 +10,9 @@ using UnityEngine.UI;
 
 public class MyFPSController : MonoBehaviour
 {
+    public Image _Life;
+    float LifeGuage;
+
 #pragma warning disable 649
     [Header("Arms")]
     [Tooltip("The transform component that holds the gun camera."), SerializeField]
@@ -72,7 +75,9 @@ public class MyFPSController : MonoBehaviour
         _rotateY = new SmoothRotation(mouseY);
 
         _rigidbody = GetComponent<Rigidbody>();
-        
+
+        LifeGuage = _Life.fillAmount;
+
     }
 
     // Update is called once per frame
@@ -192,7 +197,9 @@ public class MyFPSController : MonoBehaviour
             var localPushVec = transform.InverseTransformDirection(push);
 
             _rigidbody.AddForce(localPushVec, ForceMode.VelocityChange);
-            Debug.Log(localPushVec);
+
+            //Life減少
+            _Life.fillAmount -= 0.1f;
         }
     }
 
