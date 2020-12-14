@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class AnimalMove : MonoBehaviour
+public class AnimalMove : NetworkBehaviour
 {
-    public GameObject player;
+    public GameObject playerObj;
+    public Vector3 playerPos;
 
     float moveSpeed = 0.01f;
     float toPlayerDis = 0f;
@@ -32,7 +34,7 @@ public class AnimalMove : MonoBehaviour
     void Update()
     {
         //プレイヤーに向かうベクトル
-        toPlayerVec = player.transform.position - this.transform.position;
+        toPlayerVec = playerObj.transform.position - this.transform.position;
         //プレイヤーとの距離
         toPlayerDis = toPlayerVec.magnitude;
         //サーチ範囲にプレイヤーがいれば

@@ -162,7 +162,6 @@ public class MyAutomaticGunScript : MonoBehaviour
         //左クリックで射撃
         if(Input.GetMouseButton(0) /*&& !outOfAmmo && !isReloading && !isInspecting*/)
         {
-            Debug.Log(fireRate);
             if(Time.time - lastFired > 1f / fireRate)
             {
                 lastFired = Time.time;

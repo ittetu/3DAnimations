@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 //Rigidbody CapsuleCollider AudioSorce component
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(AudioSource))]
 
-public class MyFPSController : MonoBehaviour
+public class MyFPSController : NetworkBehaviour
 {
     public Image _Life;
     float LifeGuage;
+
+    GameObject _AnimalGeneratorObj;
+    AnimalGenerator AnimalGeneratorSc;
 
 #pragma warning disable 649
     [Header("Arms")]
@@ -27,7 +31,11 @@ public class MyFPSController : MonoBehaviour
     float maxVerticalAngle = 90f;
     SmoothRotation _rotateX;
     SmoothRotation _rotateY;
+    SmoothVelocity _velocityX;
+    SmoothVelocity _velocityZ;
+
     float rotationSmoothness = 0.05f;
+    float movementSmoothness = 0.125f;
 
     public Image _Image;
 
@@ -56,7 +64,7 @@ public class MyFPSController : MonoBehaviour
     float mouseSensitivity = 15f;
 
 
-    private Transform AssignCharactersCamera()　//むし
+    private Transform AssignCharactersCamera()　
     {
         var t = transform;
         arms.SetPositionAndRotation(t.position, t.rotation);
@@ -68,11 +76,18 @@ public class MyFPSController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //アニマルに位置を同期
+        _AnimalGeneratorObj = GameObject.Find("AnimalGeneratorObj");
+        _AnimalGeneratorObj.GetComponent<AnimalGenerator>().playerObj = this.gameObject;
+
         //armのポジションとローテーションをthisと同期？
         arms = AssignCharactersCamera();
         //スタート時のマウス移動格納
         _rotateX = new SmoothRotation(mouseX);
         _rotateY = new SmoothRotation(mouseY);
+
+        _velocityX = new SmoothVelocity();
+        _velocityZ = new SmoothVelocity();
 
         _rigidbody = GetComponent<Rigidbody>();
 
@@ -83,15 +98,18 @@ public class MyFPSController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer) return;
+
         //armのポジション
         arms.position = transform.position + transform.TransformVector(armPosition);
-        //ジャンプメソッド
-        Jump();
+        
         //サウンド
     }
 
     private void FixedUpdate()
     {
+        if (!isLocalPlayer) return;
+
         //カメラとキャラクターの向き
         RotationCameraAndCharacter();
         //キャラクターの動き
@@ -111,8 +129,8 @@ public class MyFPSController : MonoBehaviour
     void RotationCameraAndCharacter()
     {
         //SmoothUpdataメソッドでマウス移動調整
-        var rotateX = _rotateX.SmoothUpdata(mouseX, rotationSmoothness);
-        var rotateY = _rotateY.SmoothUpdata(mouseY, rotationSmoothness);
+        var rotateX = _rotateX.SmoothUpdate(mouseX, rotationSmoothness);
+        var rotateY = _rotateY.SmoothUpdate(mouseY, rotationSmoothness);
         //Y方向入力のみ限界値指定
         var clampedY = RestrictAngle(rotateY);
         //カメラのrotationを更新
@@ -157,12 +175,17 @@ public class MyFPSController : MonoBehaviour
         //実行毎に初期化
         Vector3 horizonMove = Vector3.zero;
 
+        
         //キャラクターの移動
         horizonMove = new Vector3(hMove, 0f, vMove).normalized;
         Vector3 worldDirection = transform.TransformDirection(horizonMove);
         Vector3 velocity = worldDirection * runSpeed;
+
+        var velocityX = _velocityX.Update(velocity.x, movementSmoothness);
+        var velocityZ = _velocityZ.Update(velocity.z, movementSmoothness);
+
         Vector3 rbVelocity = _rigidbody.velocity;
-        Vector3 force = new Vector3(velocity.x - rbVelocity.x, 0f, velocity.z - rbVelocity.z);
+        Vector3 force = new Vector3(velocityX - rbVelocity.x, 0f, velocityZ - rbVelocity.z);
         _rigidbody.AddForce(force, ForceMode.VelocityChange);
     }
 
@@ -177,9 +200,21 @@ public class MyFPSController : MonoBehaviour
             _current = startAngle;
         }
 
-        public float SmoothUpdata(float target, float smoothTime)
+        public float SmoothUpdate(float target, float smoothTime)
         {
             return _current = Mathf.SmoothDampAngle(_current, target, ref _currentVelocity, smoothTime);
+        }
+    }
+
+    //SmoothVelocityクラス
+    private class SmoothVelocity
+    {
+        private float _current;
+        private float _currentVelocity;
+
+        public float Update(float target,float smoothTime)
+        {
+            return _current = Mathf.SmoothDamp(_current, target, ref _currentVelocity, smoothTime);
         }
     }
 

@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class spawnAnimal : MonoBehaviour
+public class spawnAnimal : NetworkBehaviour
 {
     Transform _transform;
 
-    public GameObject _AnimalGenerator;
+    public GameObject _AnimalGeneratorObj;
     AnimalGenerator _AnimalGeneratorSc;
 
     public void Init(Vector3 spawnPos)
@@ -21,8 +22,8 @@ public class spawnAnimal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _AnimalGenerator = GameObject.Find("AnimalGenerator");
-        _AnimalGeneratorSc = _AnimalGenerator.GetComponent<AnimalGenerator>();
+        _AnimalGeneratorObj = GameObject.Find("AnimalGeneratorObj");
+        _AnimalGeneratorSc = _AnimalGeneratorObj.GetComponent<AnimalGenerator>();
     }
 
     // Update is called once per frame
