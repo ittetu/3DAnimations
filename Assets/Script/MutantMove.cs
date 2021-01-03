@@ -17,7 +17,7 @@ public class MutantMove : MonoBehaviour
 
     float toPlayerDis;//プレイヤーとの直線距離
     float playerSerchArea = 15f;//プレイヤー検知範囲
-    float playerAttackArea = 1f;//プレイヤーに攻撃する距離
+    float playerAttackArea = 3f;//プレイヤーに攻撃する距離
     float runSpeed = 0.8f;
     float walkSpeed = 0.5f;
     float changeAngle = 0f;
@@ -104,7 +104,7 @@ public class MutantMove : MonoBehaviour
             var _states = animator.GetBehaviours(Animator.StringToHash("Base Layer.Attack Tree"), 0);
             var s = (State)_states[0];
 
-            s.onStateEnter = () => Debug.Log("aruke");
+            s.onStateEnter = () => Debug.Log("kougeki");
             s.onStateExit = () => attack = false;
         }
     }
