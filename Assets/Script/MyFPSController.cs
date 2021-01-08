@@ -203,6 +203,19 @@ public class MyFPSController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Animal")
+        {
+            Debug.Log(other.gameObject.tag + "と衝突");
+            //画面を赤点
+            _Image.GetComponent<DamageScreen>().isDamaging = true;
+
+            //Life減少
+            _Life.fillAmount -= 0.1f;
+        }
+    }
+
     //Inputボタン設定
 
     //OnCollisionStayでsphereRayCast コライダーとの衝突判定を調べる

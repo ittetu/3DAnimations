@@ -254,8 +254,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 157, y: -116.49881}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_AnchoredPosition: {x: 61, y: -63.5}
+  m_SizeDelta: {x: 2000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &498268254
 MonoBehaviour:
@@ -406,6 +406,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &706041993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8778109796107686571, guid: a6a88b4d7c01746a6a77614829661150,
+    type: 3}
+  m_PrefabInstance: {fileID: 1863589244}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &706041995
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706041993}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  m_Radius: 0.5
+  m_Height: 0
+  m_Direction: 1
+  m_Center: {x: -0.2, y: -0.1707601, z: -0.0000000681434}
 --- !u!4 &744976858 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4403548763994940, guid: b9ca752c3df4dec4cadafd04fc5d444b,
@@ -449,6 +469,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b904076ca8032431f9785dbad29cd0d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animNameList:
+  - Mutant Punch
+  - Mutant Swiping
+  - Mutant Jump Attack
+--- !u!1 &1224684189 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7883749328917080035, guid: a6a88b4d7c01746a6a77614829661150,
+    type: 3}
+  m_PrefabInstance: {fileID: 1863589244}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1224684191
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224684189}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  m_Radius: 0.5
+  m_Height: 0
+  m_Direction: 1
+  m_Center: {x: 0.2, y: -0.15062037, z: -0.0000000031278926}
 --- !u!20 &1560568545 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 20176831017129482, guid: b9ca752c3df4dec4cadafd04fc5d444b,
@@ -611,6 +655,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8778109796107686571, guid: a6a88b4d7c01746a6a77614829661150,
+        type: 3}
+      propertyPath: m_TagString
+      value: Animal
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a6a88b4d7c01746a6a77614829661150,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -624,7 +673,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a6a88b4d7c01746a6a77614829661150,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.4
+      value: -2.79
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a6a88b4d7c01746a6a77614829661150,
         type: 3}
@@ -681,10 +730,20 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: -7883749328917080035, guid: a6a88b4d7c01746a6a77614829661150,
+        type: 3}
+      propertyPath: m_TagString
+      value: Animal
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a6a88b4d7c01746a6a77614829661150,
         type: 3}
       propertyPath: m_Name
       value: warrok_w_kurniawan
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a6a88b4d7c01746a6a77614829661150,
+        type: 3}
+      propertyPath: m_TagString
+      value: Animal
       objectReference: {fileID: 0}
     - target: {fileID: 1096695464039504049, guid: a6a88b4d7c01746a6a77614829661150,
         type: 3}
@@ -781,6 +840,16 @@ PrefabInstance:
         type: 3}
       propertyPath: field of view
       value: 26.991467
+      objectReference: {fileID: 0}
+    - target: {fileID: 20176831017129482, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 20176831017129482, guid: b9ca752c3df4dec4cadafd04fc5d444b,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 54436517532814138, guid: b9ca752c3df4dec4cadafd04fc5d444b,
         type: 3}
