@@ -25,7 +25,7 @@ public class MutantMove : MonoBehaviour
 
     float toPlayerDis;//プレイヤーとの直線距離
     float playerSerchArea = 15f;//プレイヤー検知範囲
-    float playerAttackArea = 7f;//プレイヤーに攻撃する距離
+    float playerAttackArea = 4.5f;//プレイヤーに攻撃する距離
     float runSpeed = 1f;
     float walkSpeed = 0.5f;
     float changeAngle = 0f;//方向転換時の変数
@@ -37,7 +37,6 @@ public class MutantMove : MonoBehaviour
     bool run = false;
     bool walking = false;
     bool attack = false;
-    bool idle = false;
 
 
     // Start is called before the first frame update
@@ -61,7 +60,8 @@ public class MutantMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveCount += Time.deltaTime; //モーション時間計測
+        Attack();
+        /*moveCount += Time.deltaTime; //モーション時間計測
 
         //プレイヤーとの相関
         playerPos = player.transform.position;
@@ -82,7 +82,7 @@ public class MutantMove : MonoBehaviour
         else//ランダムに歩く
         {
             RandamMove();
-        }
+        }*/
     }
 
     void ToPlayerMove()
@@ -115,7 +115,7 @@ public class MutantMove : MonoBehaviour
         {
             attack = true;
             //モーション種類
-            attackNum = Random.Range(0, 2);
+            attackNum = Random.Range(0, 3);
             //モーション再生
             animator.CrossFadeInFixedTime(animNameList[attackNum], 0.2f);
             //コライダーを有効
@@ -124,16 +124,29 @@ public class MutantMove : MonoBehaviour
             var _states = animator.GetBehaviours(Animator.StringToHash("Base Layer." + animNameList[attackNum]), 0);
             var s = (State)_states[0];
 
-            attackNum = Random.Range(0, 2);
+            if (attackNum == 2)
+            {
+                //一定時間後に移動させたい
+                DlayMethod(0.1f);
+                Debug.Log("移動");
+            }
+
 
             s.onStateEnter = () => Debug.Log("kougeki");
             s.onStateExit = () =>
             {
                 attack = false;
-                Debug.Log("アタック終了");
-                AttackColOff();
+                AttackColOff();//コライダーOFF
+                //攻撃モーション変更
+                attackNum = Random.Range(0, 3);
             };
         }
+    }
+
+    private IEnumerator DlayMethod(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        this.transform.position += this.transform.forward * 10f;
     }
 
     void RandamMove()
