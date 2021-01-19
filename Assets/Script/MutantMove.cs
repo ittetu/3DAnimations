@@ -110,6 +110,17 @@ public class MutantMove : MonoBehaviour
 
     void Attack()
     {
+        if (attackNum == 2)
+        {
+            //一定時間後に移動させたい
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime == 1)
+            {
+                this.transform.position += this.transform.forward * 2.3f;
+                Debug.Log("移動");
+            }
+            
+        }
+        
         //アタックアニメーション
         if (!attack)
         {
@@ -124,20 +135,13 @@ public class MutantMove : MonoBehaviour
             var _states = animator.GetBehaviours(Animator.StringToHash("Base Layer." + animNameList[attackNum]), 0);
             var s = (State)_states[0];
 
-            if (attackNum == 2)
-            {
-                //一定時間後に移動させたい
-                DlayMethod(0.1f);
-                Debug.Log("移動");
-            }
-
-
             s.onStateEnter = () => Debug.Log("kougeki");
             s.onStateExit = () =>
             {
                 attack = false;
                 AttackColOff();//コライダーOFF
                 //攻撃モーション変更
+
                 attackNum = Random.Range(0, 3);
             };
         }
@@ -146,7 +150,7 @@ public class MutantMove : MonoBehaviour
     private IEnumerator DlayMethod(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        this.transform.position += this.transform.forward * 10f;
+        
     }
 
     void RandamMove()
