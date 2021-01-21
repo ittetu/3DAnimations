@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MutantMove : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class MutantMove : MonoBehaviour
     Animator animator;
 
     GameObject player;
+
+    
 
     Collider leftHandCol;
     Collider rightHandCol;
@@ -23,6 +26,7 @@ public class MutantMove : MonoBehaviour
     int attackNum = 0; //敵の攻撃種類
     int MutantIdleHash = Animator.StringToHash("Base Layer.Mutant Idle");
 
+    
     float toPlayerDis;//プレイヤーとの直線距離
     float playerSerchArea = 15f;//プレイヤー検知範囲
     float playerAttackArea = 4.5f;//プレイヤーに攻撃する距離
@@ -44,12 +48,13 @@ public class MutantMove : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         states = animator.GetBehaviours<State>();
-
+        //コライダー取得
         leftHandCol = GameObject.Find("LeftHand").GetComponent<Collider>();
         rightHandCol = GameObject.Find("RightHand").GetComponent<Collider>();
-
+        //プレイヤー取得
         player = GameObject.Find("Assault_Rifle_01_FPSController");
         lastAngle = this.transform.eulerAngles.y;
+        
     }
 
     private void Awake()
